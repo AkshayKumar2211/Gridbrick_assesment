@@ -1,0 +1,26 @@
+# Full stack locally:  docker compose up --build
+#   Web app: http://localhost:3000    API docs: http://localhost:8000/docs
+services:
+  backend:
+    build: ./backend
+    environment:
+      DATA_SOURCE: ${DATA_SOURCE:-auto}
+      CORS_ORIGINS: "*"
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        # The browser calls the API directly on the host port.
+        VITE_API_BASE_URL: http://localhost:8000
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend

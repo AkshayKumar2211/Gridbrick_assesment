@@ -1,0 +1,4 @@
+# Store text with LF so Docker/Heroku (Linux) builds behave the same from any OS.
+* text=auto eol=lf
+*.png binary
+*.gz binary

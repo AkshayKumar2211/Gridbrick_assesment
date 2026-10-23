@@ -1,0 +1,5 @@
+# Heroku container stack: builds the backend image from backend/Dockerfile
+# (build context = backend/). The image's CMD binds to Heroku's $PORT.
+build:
+  docker:
+    web: backend/Dockerfile
